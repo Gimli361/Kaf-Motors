@@ -1,0 +1,9 @@
+# KAF Motors — Supabase CLI yapılandırması
+# Yalnız Edge Function deploy için kullanılır (DB migration'ları SQL Editor'dan çalışır).
+#   supabase functions deploy temizlik --project-ref jwwamaqjcmsvhvswusgz
+
+project_id = "jwwamaqjcmsvhvswusgz"
+
+[functions.temizlik]
+# Yalnız geçerli JWT (cron'un service_role Bearer'ı) çağırabilir → public erişim yok.
+verify_jwt = true

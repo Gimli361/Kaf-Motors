@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KAF Motors
 
-## Getting Started
+Oto galeri için "Sahibinden" benzeri araç ilan + yönetim sistemi. Tamamen **ücretsiz**
+servislerle çalışır: **Vercel** (Next.js host) + **Supabase** (DB / Auth / Storage).
 
-First, run the development server:
+> Mimari, skill kuralları ve fazlar için bkz. [`AGENTS.md`](./AGENTS.md).
+
+## Yığın
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4 · shadcn/ui (base-ui) ·
+Supabase (@supabase/ssr) · react-hook-form + zod · Tiptap · embla-carousel ·
+react-dropzone · browser-image-compression.
+
+## Geliştirme
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # değerleri Supabase > Project Settings > API'den doldur
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ortam değişkenleri için bkz. [`.env.example`](./.env.example).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Supabase kurulumu
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **DB şeması** — `supabase/migrations/0001..0006` dosyalarını **sırayla** SQL Editor'da
+   çalıştır, ardından `supabase/seed.sql` (marka/model/donanım referansları).
+2. **Storage** — `arac-gorselleri` adında **public** bucket oluştur (0005 politikaları).
+3. **Storage GC (yetim dosya temizliği)** — Faz 4:
+   - Service role anahtarını Vault'a ekle (cron'un kullanması için):
+     ```sql
+     select vault.create_secret('<SERVICE_ROLE_KEY>', 'service_role_key');
+     ```
+   - Edge Function'ı deploy et:
+     ```bash
+     supabase functions deploy temizlik --project-ref jwwamaqjcmsvhvswusgz
+     ```
+   - `0006_cron.sql`'i çalıştır → her 10 dk'da `silinecek_dosyalar` kuyruğunu işler.
+   - Doğrula: `select * from cron.job_run_details order by start_time desc limit 5;`
 
-## Learn More
+## Vercel deploy
 
-To learn more about Next.js, take a look at the following resources:
+1. GitHub reposunu Vercel'e bağla (framework otomatik: Next.js).
+2. **Environment Variables** ekle (`.env.example`'daki üç değişken — `SUPABASE_SERVICE_ROLE_KEY`
+   dahil, Production + Preview).
+3. Deploy. `next.config.ts` Supabase Storage host'unu `images.remotePatterns`'e
+   tanımlar ve `experimental.useCache` (tag-cache) açıktır.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Ücretsiz limit disiplini
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **DB'ye en az dokun** — ziyaretçi sayfaları `'use cache'` + `cacheTag`; canlı sorgu yok.
+- **Storage'ı koru** — görsel yüklemeden önce ≤200 KB WebP'e sıkıştırılır; silinen
+  dosyalar eşzamanlı (Server Action) + cron GC ile temizlenir, yetim bırakılmaz.

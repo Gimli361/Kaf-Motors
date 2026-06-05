@@ -36,4 +36,4 @@ frontend · supabase-db · image-pipeline · caching · admin-wizard.
 - ✅ Faz 2: 6 adımlı ilan sihirbazı (resim sıkıştırma+upload, ekspertiz SVG, donanım, Tiptap, önizle) + `actions/ilan.ts`, `actions/resim.ts`. Marka/model creatable combobox (`actions/referans.ts`, `eklenebilir-secim.tsx`).
 - ✅ Faz 3: cache'li ziyaretçi sitesi — `lib/queries.ts` (`'use cache'`+`cacheTag`), anasayfa/listeleme(filtre,grid/list)/detay(galeri,ekspertiz,donanım). `experimental.useCache` açık. Public anon client: `lib/supabase/public.ts`.
 - ✅ İlan yönetimi: dashboard ilan tablosu (durum değiştir/düzenle/sil), Storage göstergesi, düzenleme sayfası (`/panel/ilan/[id]/duzenle`). Wizard create+edit modu. Actions: `ilanGuncelle/ilanSil/ilanDurumGuncelle`.
-- ⏳ Faz 4: Edge Function (GC cron) + Vercel deploy.
+- ✅ Faz 4: Storage GC — `supabase/functions/temizlik` Edge Function (kuyruk→Storage remove), `0006_cron.sql` (pg_cron+pg_net, Vault'tan service_role, 10 dk'da bir). `config.toml` (verify_jwt). `.env.example` + Vercel deploy rehberi (README).
