@@ -91,3 +91,12 @@ export const EKSPERTIZ_PARCALAR: EkspertizParcaTanim[] = [
 ];
 
 export const TUM_PARCA_KODLARI = EKSPERTIZ_PARCALAR.map((p) => p.kod);
+
+export type EkspertizDeger = Record<ParcaKodu, EkspertizDurumu>;
+
+export function bosEkspertiz(): EkspertizDeger {
+  const v = {} as EkspertizDeger;
+  for (const p of EKSPERTIZ_PARCALAR) v[p.kod] = "belirtilmemis";
+  return v;
+}
+

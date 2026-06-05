@@ -29,6 +29,7 @@ export function FiltreBar({
   mevcut: Record<string, string | undefined>;
 }) {
   const router = useRouter();
+  const [mobilAcik, setMobilAcik] = useState(false);
   const [marka, setMarka] = useState<number | null>(mevcut.marka ? Number(mevcut.marka) : null);
   const [model, setModel] = useState<number | null>(mevcut.model ? Number(mevcut.model) : null);
   const [yilMin, setYilMin] = useState(mevcut.yil_min ?? "");
@@ -43,6 +44,17 @@ export function FiltreBar({
     { id: 0, ad: "Tüm Modeller" },
     ...modeller.filter((m) => m.marka_id === marka).map((m) => ({ id: m.id, ad: m.ad })),
   ];
+
+  const aktifFiltreSayisi = [
+    marka,
+    model,
+    yilMin,
+    yilMax,
+    fiyatMin,
+    fiyatMax,
+    yakit,
+    vites,
+  ].filter(Boolean).length;
 
   const uygula = () => {
     const p = new URLSearchParams();
@@ -61,10 +73,30 @@ export function FiltreBar({
   const temizle = () => router.push("/ilanlar");
 
   return (
-    <div className="rounded-lg border bg-card p-4">
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="rounded-xl border bg-card p-5 shadow-xs">
+      {/* Mobil toggle başlığı */}
+      <div className="flex items-center justify-between sm:hidden mb-4 border-b pb-3 border-border/40">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-bold text-foreground">Filtreler</span>
+          {aktifFiltreSayisi > 0 && (
+            <span className="inline-flex size-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+              {aktifFiltreSayisi}
+            </span>
+          )}
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setMobilAcik(!mobilAcik)}
+          className="text-xs font-semibold h-8"
+        >
+          {mobilAcik ? "Gizle" : "Filtreleri Göster"}
+        </Button>
+      </div>
+
+      <div className={`${mobilAcik ? "grid" : "hidden sm:grid"} gap-4 sm:grid-cols-2 lg:grid-cols-4`}>
         <div className="grid gap-1.5">
-          <Label>Marka</Label>
+          <Label className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider">Marka</Label>
           <EklenebilirSecim
             secenekler={markaOps}
             deger={marka}
@@ -77,7 +109,7 @@ export function FiltreBar({
         </div>
 
         <div className="grid gap-1.5">
-          <Label>Model</Label>
+          <Label className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider">Model</Label>
           <EklenebilirSecim
             secenekler={modelOps}
             deger={model}
@@ -88,7 +120,7 @@ export function FiltreBar({
         </div>
 
         <div className="grid gap-1.5">
-          <Label>Yıl</Label>
+          <Label className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider">Yıl</Label>
           <div className="flex items-center gap-2">
             <Input
               type="number"
@@ -96,7 +128,7 @@ export function FiltreBar({
               value={yilMin}
               onChange={(e) => setYilMin(e.target.value)}
             />
-            <span className="text-muted-foreground">–</span>
+            <span className="text-muted-foreground text-xs">–</span>
             <Input
               type="number"
               placeholder="En çok"
@@ -107,7 +139,7 @@ export function FiltreBar({
         </div>
 
         <div className="grid gap-1.5">
-          <Label>Fiyat (₺)</Label>
+          <Label className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider">Fiyat (₺)</Label>
           <div className="flex items-center gap-2">
             <Input
               type="number"
@@ -115,7 +147,7 @@ export function FiltreBar({
               value={fiyatMin}
               onChange={(e) => setFiyatMin(e.target.value)}
             />
-            <span className="text-muted-foreground">–</span>
+            <span className="text-muted-foreground text-xs">–</span>
             <Input
               type="number"
               placeholder="En çok"
@@ -126,7 +158,7 @@ export function FiltreBar({
         </div>
 
         <div className="grid gap-1.5">
-          <Label>Yakıt</Label>
+          <Label className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider">Yakıt</Label>
           <Select
             value={yakit || null}
             onValueChange={(v) => setYakit(v === "__all" ? "" : String(v))}
@@ -152,7 +184,7 @@ export function FiltreBar({
         </div>
 
         <div className="grid gap-1.5">
-          <Label>Vites</Label>
+          <Label className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider">Vites</Label>
           <Select
             value={vites || null}
             onValueChange={(v) => setVites(v === "__all" ? "" : String(v))}
@@ -178,10 +210,10 @@ export function FiltreBar({
         </div>
 
         <div className="flex items-end gap-2 sm:col-span-2">
-          <Button onClick={uygula} className="flex-1">
+          <Button onClick={uygula} className="flex-1 shadow-sm transition-transform active:scale-[0.98]">
             <Search className="size-4" /> Filtrele
           </Button>
-          <Button variant="outline" onClick={temizle}>
+          <Button variant="outline" onClick={temizle} className="transition-transform active:scale-[0.98]">
             <X className="size-4" /> Temizle
           </Button>
         </div>

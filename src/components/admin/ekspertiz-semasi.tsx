@@ -5,6 +5,8 @@ import {
   EKSPERTIZ_PARCALAR,
   EKSPERTIZ_DURUMLARI,
   ekspertizRenk,
+  bosEkspertiz,
+  type EkspertizDeger,
 } from "@/lib/constants";
 
 const DONGU: EkspertizDurumu[] = [
@@ -20,7 +22,7 @@ function sonraki(durum: EkspertizDurumu): EkspertizDurumu {
   return DONGU[(i + 1) % DONGU.length];
 }
 
-export type EkspertizDeger = Record<ParcaKodu, EkspertizDurumu>;
+
 
 type Props = {
   deger: EkspertizDeger;
@@ -132,8 +134,5 @@ export function EkspertizSemasi({ deger, onChange, readonly }: Props) {
   );
 }
 
-export function bosEkspertiz(): EkspertizDeger {
-  const v = {} as EkspertizDeger;
-  for (const p of EKSPERTIZ_PARCALAR) v[p.kod] = "belirtilmemis";
-  return v;
-}
+
+

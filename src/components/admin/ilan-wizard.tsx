@@ -50,7 +50,8 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 
 import { DonanimSecici } from "./donanim-secici";
-import { EkspertizSemasi, bosEkspertiz, type EkspertizDeger } from "./ekspertiz-semasi";
+import { EkspertizSemasi } from "./ekspertiz-semasi";
+import { bosEkspertiz, type EkspertizDeger } from "@/lib/constants";
 import { ResimYukleyici, type YukluResim } from "./resim-yukleyici";
 import { TiptapEditor } from "./tiptap-editor";
 import { EklenebilirSecim, type SecenekOge } from "./eklenebilir-secim";

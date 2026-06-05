@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import { Car } from "lucide-react";
 import { girisYap, type AuthState } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +18,7 @@ import {
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" className="w-full" disabled={pending}>
+    <Button type="submit" className="w-full h-9 transition-transform active:scale-[0.98] font-semibold shadow-sm shadow-primary/10" disabled={pending}>
       {pending ? "Giriş yapılıyor…" : "Giriş Yap"}
     </Button>
   );
@@ -29,11 +30,17 @@ export function LoginForm() {
   });
 
   return (
-    <Card className="w-full max-w-sm">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl">KAF Motors</CardTitle>
-        <CardDescription>Yönetici Paneli Girişi</CardDescription>
+    <Card className="w-full max-w-sm rounded-xl border bg-card shadow-md">
+      <CardHeader className="text-center pb-4 pt-6">
+        <div className="flex justify-center mb-3">
+          <div className="flex size-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <Car className="size-6" />
+          </div>
+        </div>
+        <CardTitle className="text-2xl font-black tracking-tight">KAF Motors</CardTitle>
+        <CardDescription className="text-xs text-muted-foreground/80 mt-1">Yönetici Paneli Girişi</CardDescription>
       </CardHeader>
+
       <CardContent>
         <form action={formAction} className="grid gap-4">
           <div className="grid gap-2">

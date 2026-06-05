@@ -20,6 +20,7 @@ export type IlanKart = {
   yakit: Yakit;
   vites: Vites;
   marka: string;
+  markaLogo: string | null;
   model: string;
   kapakPath: string | null;
 };
@@ -37,7 +38,7 @@ export type Filtre = {
 };
 
 const KART_SELECT =
-  "id, slug, baslik, fiyat, km, yil, yakit, vites, markalar(ad), modeller(ad), kapak:arac_resimleri!fk_kapak_resim(storage_path)";
+  "id, slug, baslik, fiyat, km, yil, yakit, vites, markalar(ad, logo_url), modeller(ad), kapak:arac_resimleri!fk_kapak_resim(storage_path)";
 
 type RawKart = {
   id: string;
@@ -48,7 +49,7 @@ type RawKart = {
   yil: number;
   yakit: Yakit;
   vites: Vites;
-  markalar: { ad: string } | null;
+  markalar: { ad: string; logo_url: string | null } | null;
   modeller: { ad: string } | null;
   kapak: { storage_path: string } | null;
 };
@@ -64,6 +65,7 @@ function karta(r: RawKart): IlanKart {
     yakit: r.yakit,
     vites: r.vites,
     marka: r.markalar?.ad ?? "",
+    markaLogo: r.markalar?.logo_url ?? null,
     model: r.modeller?.ad ?? "",
     kapakPath: r.kapak?.storage_path ?? null,
   };

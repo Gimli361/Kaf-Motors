@@ -27,6 +27,8 @@ frontend · supabase-db · image-pipeline · caching · admin-wizard.
 - Supabase client'lar `lib/supabase/{client,server,admin}.ts`. `admin` = service_role, SADECE sunucu.
 - DB tipleri `src/types/database.ts` (el ile). Migration sonrası `supabase gen types` ile yenile.
 - SQL: `supabase/migrations/0001..0005` + `supabase/seed.sql` — sırayla Supabase SQL Editor'da çalıştır.
+- **SSR / Client Sınırı**: `"use client"` direktifli dosyalardan export edilen yardımcı fonksiyonlar (ör. `bosEkspertiz`) Server Component'lerde doğrudan çağrılamaz. Bu tür ortak mantık/yardımcı fonksiyonları `src/lib/constants.ts` veya `src/lib/utils.ts` gibi paylaşılan dosyalarda tanımla.
+
 
 ## Faz durumu
 - ✅ Faz 0: iskelet, shadcn, klasör yapısı.
