@@ -9,6 +9,8 @@ import {
   KASA_OPSIYONLARI,
   CEKIS_OPSIYONLARI,
   bosEkspertiz,
+  ILETISIM_TEL,
+  ILETISIM_WHATSAPP,
   type EkspertizDeger,
 } from "@/lib/constants";
 import { Galeri } from "@/components/public/galeri";
@@ -75,6 +77,31 @@ export default async function IlanDetayPage({
     arr.push(x.ad);
     donanimGrup.set(x.kategori, arr);
   }
+
+  // İletişim linkleri
+  const telHref = `tel:${ILETISIM_TEL}`;
+
+  // Site adresi: Vercel prod'da otomatik (VERCEL_PROJECT_PRODUCTION_URL), yerelde NEXT_PUBLIC_SITE_URL ile override.
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "");
+  const ilanUrl = siteUrl ? `${siteUrl}/ilan/${d.slug}` : "";
+
+  const waMesaj = [
+    "Merhaba, KAF Motors'taki şu ilan hakkında bilgi almak istiyorum:",
+    "",
+    d.baslik,
+    `Fiyat: ${fiyatFormat(d.fiyat)}`,
+    ilanUrl, // boşsa filtrelenir → linksiz, hata vermez
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const waHref = `https://wa.me/${ILETISIM_WHATSAPP}?text=${encodeURIComponent(
+    waMesaj
+  )}`;
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8 pb-24 lg:pb-8">
@@ -205,13 +232,13 @@ export default async function IlanDetayPage({
 
               <div className="pt-2 space-y-2">
                 <a
-                  href="tel:+905555555555"
+                  href={telHref}
                   className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground font-bold text-sm shadow-sm transition-all duration-200 active:scale-[0.98] hover:bg-primary/95"
                 >
                   Telefonla Ara
                 </a>
                 <a
-                  href="https://wa.me/905555555555"
+                  href={waHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-green-600/30 bg-green-500/10 text-green-700 dark:text-green-400 font-bold text-sm transition-all duration-200 active:scale-[0.98] hover:bg-green-500/20"
@@ -232,13 +259,13 @@ export default async function IlanDetayPage({
         </div>
         <div className="flex gap-2">
           <a
-            href="tel:+905555555555"
+            href={telHref}
             className="flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-xs font-bold text-primary-foreground shadow-xs transition-all active:scale-[0.98]"
           >
             Telefonla Ara
           </a>
           <a
-            href="https://wa.me/905555555555"
+            href={waHref}
             target="_blank"
             rel="noopener noreferrer"
             className="flex h-9 items-center justify-center rounded-lg border border-green-600/30 bg-green-500/10 px-4 text-xs font-bold text-green-700 dark:text-green-400 transition-all active:scale-[0.98]"

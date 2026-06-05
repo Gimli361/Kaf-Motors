@@ -9,6 +9,11 @@ import type {
 
 export const BUCKET = "arac-gorselleri";
 
+// İletişim bilgileri (tek kaynak)
+export const ILETISIM_TEL = "+905541963901"; // tel: linki için
+export const ILETISIM_WHATSAPP = "905541963901"; // wa.me için (+ ve boşluk yok)
+export const ILETISIM_TEL_GOSTERIM = "+90 554 196 39 01"; // görünür metin (ileride gerekirse)
+
 type Opt<T> = { value: T; label: string };
 
 export const YAKIT_OPSIYONLARI: Opt<Yakit>[] = [
