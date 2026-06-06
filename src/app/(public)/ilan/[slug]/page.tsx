@@ -104,7 +104,7 @@ export default async function IlanDetayPage({
   )}`;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-8 pb-24 lg:pb-8">
+    <main className="mx-auto max-w-6xl overflow-x-clip px-4 py-8 pb-24 lg:pb-8">
       <nav className="mb-6 text-xs font-semibold tracking-wider uppercase text-muted-foreground/80 flex items-center gap-1.5">
         <Link href="/" className="hover:text-primary transition-colors">Ana Sayfa</Link>
         <span>/</span>
@@ -188,7 +188,7 @@ export default async function IlanDetayPage({
                 Açıklama
               </h2>
               <div
-                className="text-sm leading-relaxed text-foreground/80 [&_h2]:mt-4 [&_h2]:text-base [&_h2]:font-bold [&_h2]:text-foreground [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_ul]:list-disc [&_ul]:pl-5"
+                className="overflow-hidden text-sm leading-relaxed break-words text-foreground/80 [&_h2]:mt-4 [&_h2]:text-base [&_h2]:font-bold [&_h2]:text-foreground [&_img]:h-auto [&_img]:max-w-full [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_pre]:overflow-x-auto [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
                 dangerouslySetInnerHTML={{ __html: d.aciklamaHtml }}
               />
             </section>
