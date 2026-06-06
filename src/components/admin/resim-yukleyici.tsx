@@ -154,7 +154,7 @@ export function ResimYukleyici({ resimler, onChange }: Props) {
                       type="button"
                       onClick={() => tasi(i, -1)}
                       disabled={i === 0}
-                      className="rounded p-1 hover:bg-accent disabled:opacity-30"
+                      className="rounded p-1.5 hover:bg-accent disabled:opacity-30"
                       aria-label="Sola taşı"
                     >
                       <ArrowLeft className="size-3.5" />
@@ -163,7 +163,7 @@ export function ResimYukleyici({ resimler, onChange }: Props) {
                       type="button"
                       onClick={() => tasi(i, 1)}
                       disabled={i === resimler.length - 1}
-                      className="rounded p-1 hover:bg-accent disabled:opacity-30"
+                      className="rounded p-1.5 hover:bg-accent disabled:opacity-30"
                       aria-label="Sağa taşı"
                     >
                       <ArrowRight className="size-3.5" />
@@ -174,7 +174,7 @@ export function ResimYukleyici({ resimler, onChange }: Props) {
                       type="button"
                       onClick={() => kapakYap(i)}
                       disabled={i === 0}
-                      className="rounded p-1 hover:bg-accent disabled:opacity-30"
+                      className="rounded p-1.5 hover:bg-accent disabled:opacity-30"
                       aria-label="Kapak yap"
                     >
                       <Star className="size-3.5" />
@@ -182,7 +182,7 @@ export function ResimYukleyici({ resimler, onChange }: Props) {
                     <button
                       type="button"
                       onClick={() => sil(r.id)}
-                      className="rounded p-1 text-destructive hover:bg-destructive/10"
+                      className="rounded p-1.5 text-destructive hover:bg-destructive/10"
                       aria-label="Sil"
                     >
                       <Trash2 className="size-3.5" />

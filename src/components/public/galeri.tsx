@@ -29,7 +29,7 @@ export function Galeri({
 
   if (!resimler.length) {
     return (
-      <div className="grid aspect-[4/3] place-items-center rounded-lg border bg-muted text-muted-foreground">
+      <div className="grid h-[45vh] place-items-center rounded-lg border bg-muted text-muted-foreground sm:h-[52vh] lg:h-[58vh]">
         Görsel yok
       </div>
     );
@@ -40,13 +40,16 @@ export function Galeri({
       <div className="relative overflow-hidden rounded-lg border" ref={emblaRef}>
         <div className="flex">
           {resimler.map((r, i) => (
-            <div key={r.id} className="relative aspect-[4/3] min-w-0 flex-[0_0_100%] bg-muted">
+            <div
+              key={r.id}
+              className="relative h-[45vh] min-w-0 flex-[0_0_100%] bg-muted sm:h-[52vh] lg:h-[58vh]"
+            >
               <Image
                 src={r.url}
                 alt={`${baslik} — ${i + 1}`}
                 fill
                 sizes="(max-width:1024px) 100vw, 60vw"
-                className="object-cover"
+                className="object-contain"
                 priority={i === 0}
               />
             </div>

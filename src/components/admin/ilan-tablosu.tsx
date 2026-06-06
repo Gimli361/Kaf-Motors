@@ -83,7 +83,69 @@ export function IlanTablosu({ ilanlar }: { ilanlar: PanelIlan[] }) {
 
   return (
     <div className="space-y-3">
-      <div className="overflow-x-auto rounded-lg border">
+      {/* Mobil: kart listesi */}
+      <div className="space-y-3 md:hidden">
+        {ilanlar.map((i) => {
+          const url = gorselUrl(i.kapakPath);
+          return (
+            <div key={i.id} className="space-y-3 rounded-lg border p-3">
+              <div className="flex items-start gap-3">
+                <div className="relative aspect-[4/3] h-14 w-20 shrink-0 overflow-hidden rounded bg-muted">
+                  {url && (
+                    <Image src={url} alt="" fill sizes="80px" className="object-cover" />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="line-clamp-2 font-medium">{i.baslik}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {i.marka} {i.model} · {i.resimSayisi} görsel
+                  </p>
+                  <p className="mt-1 font-semibold">{fiyatFormat(i.fiyat)}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Select
+                  value={i.durum}
+                  onValueChange={(v) => durumDegistir(i.id, v as AracDurumu)}
+                >
+                  <SelectTrigger className="w-full flex-1">
+                    <SelectValue>
+                      {(v) => DURUMLAR.find((d) => d.value === v)?.label ?? "—"}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DURUMLAR.map((d) => (
+                      <SelectItem key={d.value} value={d.value}>
+                        {d.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  nativeButton={false}
+                  render={<Link href={`/panel/ilan/${i.id}/duzenle`} />}
+                >
+                  <Pencil className="size-3.5" /> Düzenle
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-destructive"
+                  aria-label="Sil"
+                  onClick={() => setSilinecek(i)}
+                >
+                  <Trash2 className="size-3.5" />
+                </Button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Masaüstü: tablo */}
+      <div className="hidden overflow-x-auto rounded-lg border md:block">
         <table className="w-full text-sm">
           <thead className="border-b bg-muted/40 text-left text-xs text-muted-foreground">
             <tr>
