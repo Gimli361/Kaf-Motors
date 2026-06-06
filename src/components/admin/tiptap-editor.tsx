@@ -10,6 +10,7 @@ import {
   ListOrdered,
   Undo,
   Redo,
+  Minus,
 } from "lucide-react";
 
 type Props = {
@@ -79,6 +80,12 @@ function AracCubugu({ editor }: { editor: Editor }) {
       >
         <ListOrdered className="size-4" />
       </AracButon>
+      <AracButon
+        etiket="Yatay Çizgi"
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
+      >
+        <Minus className="size-4" />
+      </AracButon>
       <span className="mx-1 h-5 w-px bg-border" />
       <AracButon etiket="Geri al" onClick={() => editor.chain().focus().undo().run()}>
         <Undo className="size-4" />
@@ -98,7 +105,7 @@ export function TiptapEditor({ value, onChange }: Props) {
     editorProps: {
       attributes: {
         class:
-          "min-h-40 px-3 py-2 outline-none [&_h2]:text-lg [&_h2]:font-semibold [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-1",
+          "min-h-40 px-3 py-2 outline-none [&_h2]:text-lg [&_h2]:font-semibold [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-1 [&_hr]:my-4 [&_hr]:border-t [&_hr]:border-border/60",
       },
     },
     onUpdate: ({ editor }) => onChange(editor.getHTML()),

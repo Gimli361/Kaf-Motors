@@ -122,9 +122,9 @@ export default async function IlanDetayPage({
         <p className="text-3xl font-black text-primary tracking-tight">{fiyatFormat(d.fiyat)}</p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
+      <div className="grid gap-6 lg:grid-cols-[1fr_340px] min-w-0">
         {/* Sol kolon */}
-        <div className="space-y-6">
+        <div className="space-y-6 min-w-0">
           <div className="overflow-hidden rounded-xl border bg-card p-3 shadow-xs">
             <Galeri resimler={resimler} baslik={d.baslik} />
           </div>
@@ -188,7 +188,7 @@ export default async function IlanDetayPage({
                 Açıklama
               </h2>
               <div
-                className="overflow-hidden text-sm leading-relaxed break-words text-foreground/80 [&_h2]:mt-4 [&_h2]:text-base [&_h2]:font-bold [&_h2]:text-foreground [&_img]:h-auto [&_img]:max-w-full [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_pre]:overflow-x-auto [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5"
+                className="overflow-hidden text-sm leading-relaxed break-words break-all text-foreground/80 [&_*]:break-words [&_*]:break-all [&_h2]:mt-4 [&_h2]:text-base [&_h2]:font-bold [&_h2]:text-foreground [&_img]:h-auto [&_img]:max-w-full [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_pre]:overflow-x-auto [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_ul]:list-disc [&_ul]:pl-5 [&_hr]:my-6 [&_hr]:border-t [&_hr]:border-border/60"
                 dangerouslySetInnerHTML={{ __html: d.aciklamaHtml }}
               />
             </section>
