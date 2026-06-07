@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     useCache: true,
   },
   images: {
+    // Next 16: qualities varsayılanı [75]. Galeride quality=90 kullanıldığı için whitelist'e eklenmeli.
+    qualities: [75, 90],
     remotePatterns: [
       {
         protocol: "https",

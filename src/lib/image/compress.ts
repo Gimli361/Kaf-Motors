@@ -7,14 +7,15 @@ export type SikistirilmisResim = {
   boyutKb: number;
 };
 
-// image-pipeline skill: yükleme ÖNCESİ tarayıcıda ≤200 KB WebP'e sıkıştır.
+// image-pipeline skill: yükleme ÖNCESİ tarayıcıda yüksek kaliteli WebP'e sıkıştır.
+// Hedef hacim sabit (30 ilan × 10 foto ≈ 300 görsel) → Storage sıkışmıyor, kalite önceliği.
 export async function resimSikistir(file: File): Promise<SikistirilmisResim> {
   const blob = await imageCompression(file, {
-    maxSizeMB: 0.2, // ~200 KB hedef
-    maxWidthOrHeight: 1600,
+    maxSizeMB: 3.0, // yumuşak güvenlik tavanı (300 foto rahat sığar)
+    maxWidthOrHeight: 3840, // 4K, zoom/tam ekran için
     useWebWorker: true, // UI donmasın
     fileType: "image/webp", // JPEG'den ~%30 küçük
-    initialQuality: 0.8,
+    initialQuality: 0.95,
   });
 
   const { genislik, yukseklik } = await olcuAl(blob);

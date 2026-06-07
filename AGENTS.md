@@ -11,7 +11,7 @@ Oto galeri için "Sahibinden" benzeri araç ilan + yönetim sistemi. Ücretsiz s
 ## En kritik kısıt
 Ücretsiz limitler **asla** aşılmamalı: Supabase 500 MB DB, 1 GB Storage, sınırlı egress. İki ilke:
 1. **DB'ye en az dokun** → ISR + tag-cache (ziyaretçi sayfalarında canlı sorgu yok).
-2. **Storage'ı koru** → görseli yüklemeden önce ≤200 KB WebP'e sıkıştır; yetim dosya bırakma.
+2. **Storage'ı koru** → görseli yüklemeden önce WebP'e sıkıştır (hedef ~300 görsel; max 3840px, ~3 MB tavan, q0.95 — bkz. image-pipeline skill); yetim dosya bırakma.
 
 ## Yığın
 Next.js 16 (App Router) · React 19 · TS · Tailwind v4 · shadcn/ui (**base-ui** tabanlı) · Supabase (@supabase/ssr) · react-hook-form + zod · Tiptap · embla-carousel · react-dropzone · browser-image-compression.

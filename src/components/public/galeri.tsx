@@ -51,6 +51,7 @@ export function Galeri({
                 alt={`${baslik} — ${i + 1}`}
                 fill
                 sizes="(max-width:1024px) 100vw, 60vw"
+                quality={90}
                 className="object-contain transition-transform duration-500 group-hover/item:scale-[1.01]"
                 priority={i === 0}
               />
@@ -317,6 +318,7 @@ function Lightbox({ resimler, baslik, initialIndex, onClose }: LightboxProps) {
             alt={`${baslik} — ${index + 1}`}
             fill
             sizes="100vw"
+            quality={90}
             className="object-contain pointer-events-none"
             priority
           />
